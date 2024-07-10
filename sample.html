@@ -1,0 +1,139 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <link href="http://cdn-na.infragistics.com/igniteui/2023.2/latest/css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+    <link href="http://cdn-na.infragistics.com/igniteui/2023.2/latest/css/structure/infragistics.css" rel="stylesheet" />
+
+    <script src="http://ajax.aspnetcdn.com/ajax/modernizr/modernizr-2.8.3.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+
+    <script src="http://cdn-na.infragistics.com/igniteui/2023.2/latest/js/infragistics.core.js"></script>
+    <script src="http://cdn-na.infragistics.com/igniteui/2023.2/latest/js/infragistics.lob.js"></script>
+	
+<script>
+
+
+var northwind = [{
+	"EmployeeID": 1,
+	"LastName": "Davolio",
+	"FirstName": "Nancy",
+	"CheckBoxCol":true,
+	"Orders": [{
+			"OrderID": 10258,
+			"CustomerID": "ERNSH",
+			"ShipName": "Ernst Handel",
+			"ShipCountry": "Austria",
+			"Freight": "140.5100"
+		}, {
+			"OrderID": 10270,
+			"CustomerID": "WARTH",
+			"ShipName": "Wartian Herkku",
+			"ShipCountry": "Finland",
+			"Freight": "136.5400"
+		}, {
+			"OrderID": 10275,
+			"CustomerID": "MAGAA",
+			"ShipName": "Magazzini Alimentari Riuniti",
+			"ShipCountry": "Italy",
+			"Freight": "26.9300"
+		}, {
+			"OrderID": 11077,
+			"CustomerID": "RATTC",
+			"ShipName": "Rattlesnake Canyon Grocery",
+			"ShipCountry": "USA",
+			"Freight": "8.5300"
+		}]
+}, {
+	"EmployeeID": 2,
+	"LastName": "Fuller",
+	"FirstName": "Andrew",
+	"Orders": [{
+			"OrderID": 10265,
+			"CustomerID": "BLONP",
+			"ShipName": "Blondel p\u00e8re et fils",
+			"ShipCountry": "France",
+			"Freight": "55.2800"
+		}, {
+			"OrderID": 10277,
+			"CustomerID": "MORGK",
+			"ShipName": "Morgenstern Gesundkost",
+			"ShipCountry": "Germany",
+			"Freight": "125.7700"
+		}, {
+			"OrderID": 10280,
+			"CustomerID": "BERGS",
+			"ShipName": "Berglunds snabbk\u00f6p",
+			"ShipCountry": "Sweden",
+			"Freight": "8.9800"
+		}, {
+			"OrderID": 11073,
+			"CustomerID": "PERIC",
+			"ShipName": "Pericles Comidas cl\u00e1sicas",
+			"ShipCountry": "Mexico",
+			"Freight": "24.9500"
+		}]
+}, {
+	"EmployeeID": 3,
+	"LastName": "Leverling",
+	"FirstName": "Janet",
+	"Orders": [{
+			"OrderID": 10251,
+			"CustomerID": "VICTE",
+			"EmployeeID": 3,
+			"ShipName": "Victuailles en stock",
+			"ShipCountry": "France",
+			"Freight": "41.3400"
+		}, {
+			"OrderID": 11063,
+			"CustomerID": "HUNGO",
+			"EmployeeID": 3,
+			"ShipName": "Hungry Owl All-Night Grocers",
+			"ShipCountry": "Ireland",
+			"Freight": "81.7300"
+		}]
+}];
+
+$(function() {
+	$("#hierarchicalGrid").igHierarchicalGrid({
+		width: "1000px",
+		height: "800px",
+		autoGenerateColumns: false,
+		dataSource: northwind,
+		primaryKey:"EmployeeID",
+		initialExpandDepth: 2,
+		columns: [
+		   { key: "EmployeeID", headerText: "EmployeeID", dataType: "number", width: "200px" },
+		   { key: "FirstName", headerText: "FirstName", dataType: "string", width: "200px" },
+		   { key: "LastName", headerText: "LastName", dataType: "string", width: "200px" },
+		],
+		autoGenerateLayouts: false,
+		columnLayouts: [
+			{
+				key: "Orders",
+				width: "100%",
+				autoGenerateColumns: false,
+				primaryKey: "OrderID",
+				autoCommit:true,
+				columns: [
+					{ key: "OrderID", headerText: "OrderID", dataType: "number", width: "300px"},
+					{ key: "CustomerID", headerText: "CustomerID", dataType: "string", width: "300px"},
+					{ key: "ShipName", headerText: "ShipName", dataType: "string", width: "300px" },
+				]
+			}
+		]
+	});
+});
+
+function buttonClick(){
+	var parentRows = $("#hierarchicalGrid").igHierarchicalGrid("rootWidget").rows().not("[data-container='true']");
+	console.log(parentRows);
+}
+</script>
+</head>
+<body>
+
+<table id="hierarchicalGrid"></table>
+<input type="button" value="Get parent rows" onclick="buttonClick()">
+</body>
+</html>
